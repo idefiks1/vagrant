@@ -42,20 +42,23 @@ if(isset($_POST["register"]))
                 url: 'check.php',
                 dataType: 'json',
                 data: {InputLogin1: $('#InputLogin1').val()},
+
                 success: function(data)
                 {
                     
 
-                    //console.log(data, data.success);
+                    console.log(data, data.success);
                     if (data.success == true)
                     {
                         $("#InputLogin1").closest('.form-group').removeClass('has-error').addClass('has-success');
                         $("#helpBlock1").html("Success!");
+                        $("#sub_reg").removeClass('disabled');
                     }
                     if (data.success == false)
                     {
                         $("#InputLogin1").closest('.form-group').removeClass('has-success').addClass('has-error');
                         $("#helpBlock1").html("This login already use!");
+                        $("#sub_reg").addClass('disabled');
                     }
                   
                 }
@@ -73,15 +76,18 @@ if(isset($_POST["register"]))
                 success: function(data)
                 {
 
+                    console.log(data, data.success1);
                     if (data.success1 == true)
                     {
                         $("#InputEmail").closest('.form-group').removeClass('has-error').addClass('has-success');
                         $("#helpBlock2").html("Success!");
+                        $("#sub_reg").removeClass('disabled');
                     }
                     if (data.success1 == false)
                     {
                         $("#InputEmail").closest('.form-group').removeClass('has-success').addClass('has-error');
                         $("#helpBlock2").html("This login already use!");
+                        $("#sub_reg").addClass('disabled');
                     }
                     
                 }
@@ -130,9 +136,8 @@ if(isset($_POST["register"]))
                 <p><input type="email" name="InputEmail" class="form-control" id="InputEmail" placeholder="Email"></p>
                 <span id="helpBlock2" class="help-block"></span>
             </div>
-            <p><button type="submit" name="register" class="btn btn-primary">Registration</button></p>
+            <p><button type="submit" name="register" class="btn btn-primary" id="sub_reg">Registration</button></p>
             
-
         </form>
     </div>
 </div>
