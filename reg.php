@@ -42,9 +42,9 @@ if(isset($_POST["register"]))
                 url: 'check.php',
                 dataType: 'json',
                 data: {InputLogin1: $('#InputLogin1').val()},
-                data1:{InputEmail: $('#InputEmail').val()},
                 success: function(data)
                 {
+                    
 
                     //console.log(data, data.success);
                     if (data.success == true)
@@ -57,35 +57,13 @@ if(isset($_POST["register"]))
                         $("#InputLogin1").closest('.form-group').removeClass('has-success').addClass('has-error');
                         $("#helpBlock1").html("This login already use!");
                     }
-
-                    
+                  
                 }
-                success: function(data1)
-                {
-
-                    //console.log(data, data.success);
-                    if (data1.success == true)
-                    {
-                        $("#InputEmail").closest('.form-group').removeClass('has-error').addClass('has-success');
-                        $("#helpBlock2").html("Success!");
-                    }
-                    if (data1.success == false)
-                    {
-                        $("#InputEmail").closest('.form-group').removeClass('has-success').addClass('has-error');
-                        $("#helpBlock2").html("This login already use!");
-                    }
-
-                    
-                }
+              
 
             });
         });
-
-
-
-
-
-         /*$( "#InputEmail" ).blur(function(e) {
+            $( "#InputEmail" ).blur(function(e) {
             e.preventDefault();
             $.ajax({
                 type: 'POST',
@@ -94,21 +72,28 @@ if(isset($_POST["register"]))
                 data: {InputEmail: $('#InputEmail').val()},
                 success: function(data)
                 {
-                   
+
                     if (data.success1 == true)
                     {
                         $("#InputEmail").closest('.form-group').removeClass('has-error').addClass('has-success');
+                        $("#helpBlock2").html("Success!");
                     }
                     if (data.success1 == false)
                     {
                         $("#InputEmail").closest('.form-group').removeClass('has-success').addClass('has-error');
+                        $("#helpBlock2").html("This login already use!");
                     }
-
-                    //$("#content").html(data);
+                    
                 }
+              
 
             });
-        });*/
+        });
+
+
+
+
+        
     });
 </script>
 

@@ -37,7 +37,7 @@ else
 	echo json_encode(array('success'=>true));
 }
 
-/*$pdo1 = db_connect();
+$pdo1 = db_connect();
 $stmt = $pdo1->prepare("SELECT email FROM users WHERE email = ?");
 $stmt->bindParam(1, $_POST['InputEmail'], PDO::PARAM_STR, 20);
 $stmt->execute();
