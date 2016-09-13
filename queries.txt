@@ -1,0 +1,20 @@
+CREATE TABLE `comments` (
+  `id` int(4) NOT NULL AUTO_INCREMENT,
+  `id_user` int(4) NOT NULL,
+  `name` varchar(20) DEFAULT NULL,
+  `comment` varchar(100) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+
+
+
+CREATE TABLE `users` (
+  `id_user` int(4) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) DEFAULT NULL,
+  `email` varchar(30) DEFAULT NULL,
+  `pwd` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id_user`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+
+
