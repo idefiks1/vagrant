@@ -25,10 +25,6 @@ include ('config.php');
                             <a href = "edit.php?id=<?php echo $value['id']; ?>">Edit</a>
                             <?php 
                         }
-                        else 
-                        {
-                            echo "";
-                        }
                         ?>
                         </ul>
                     </div>

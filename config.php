@@ -29,7 +29,7 @@ function db_connect()
 function get_data()
 {
 	$pdo = db_connect();
-	$stmt = $pdo->prepare("SELECT * FROM comments");
+	$stmt = $pdo->prepare("SELECT * FROM comments ");//join users
     $stmt->execute();
     $rowsArray = $stmt->fetchAll();
 	return $rowsArray;

@@ -51,6 +51,19 @@ if (empty($_POST['InputEmail']))
 }
 else
 {
+	$email = $_POST['InputEmail'];
+	if(!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $email))
+	{
+		$json['success2'] = false;
+    }
+    else
+    {
+    	$json['success2'] = true;
+
+    }    
+	
+
+
 
 	$stmt1 = $pdo->prepare("SELECT email FROM users WHERE email = ?");
 	$stmt1->bindParam(1, $_POST['InputEmail'], PDO::PARAM_STR, 20);
@@ -66,6 +79,7 @@ else
 		$json['success1'] = false;
 		
 	}
+	
 }
 echo json_encode($json);
 ?>
