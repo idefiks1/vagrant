@@ -4,11 +4,12 @@ include ('config.php');
 <?php
 if(isset($_POST["register"]))
 {
-    if(!empty($_POST['InputLogin1']) && !empty($_POST['InputPassword1'])) 
+    if(!empty($_POST['InputLogin1']) && !empty($_POST['InputPassword1']) && !empty($_POST['InputEmail'])) 
     {
         $username=$_POST['InputLogin1'];
         $password=$_POST['InputPassword1'];
         $email = $_POST['InputEmail'];
+        $hash = md5(rand(0,1000));
         $conn = db_connect();
         $stmt = $conn->prepare("SELECT name, pwd  FROM users where name = ?");
         $stmt->bindParam(1, $username, PDO::PARAM_STR, 12);
@@ -17,10 +18,11 @@ if(isset($_POST["register"]))
         $numRows = count($namePwd);
         if($numRows==0)
         {
-            $stmt1 = $conn->prepare("INSERT INTO users (name, pwd, email) VALUES (?,?,?)");
-            $stmt1->bindParam(1, $username, PDO::PARAM_STR, 12);
-            $stmt1->bindParam(2, md5("vagrant" + $_POST['InputPassword1']), PDO::PARAM_STR, 12);
-            $stmt1->bindParam(3, $email, PDO::PARAM_STR, 12);
+            $stmt1 = $conn->prepare("INSERT INTO users (name, pwd, email, hash) VALUES (?,?,?,?)");
+            $stmt1->bindParam(1, $username, PDO::PARAM_STR, 20);
+            $stmt1->bindParam(2, md5("vagrant" + $_POST['InputPassword1']), PDO::PARAM_STR, 100);
+            $stmt1->bindParam(3, $email, PDO::PARAM_STR, 30);
+            $stmt1->bindParam(4, $hash, PDO::PARAM_STR, 32);
             $stmt1->execute();
             header("Location: login.php");  
         }
@@ -57,7 +59,7 @@ if(isset($_POST["register"]))
                     if (data.success == false)
                     {
                         $("#InputLogin1").closest('.form-group').removeClass('has-success').addClass('has-error');
-                        $("#helpBlock1").html("This login already use!");
+                        $("#helpBlock1").html("This login already use or empty!");
                         $("#sub_reg").addClass('disabled');
                     }
                   
@@ -86,7 +88,7 @@ if(isset($_POST["register"]))
                     if (data.success1 == false)
                     {
                         $("#InputEmail").closest('.form-group').removeClass('has-success').addClass('has-error');
-                        $("#helpBlock2").html("This login already use!");
+                        $("#helpBlock2").html("This email already use or empty!");
                         $("#sub_reg").addClass('disabled');
                     }
                     
@@ -94,22 +96,9 @@ if(isset($_POST["register"]))
               
 
             });
-        });
-
-
-
-
-        
+        });   
     });
 </script>
-
-
-
-
-
- 
-        <form action="reg.php" method="post">
-
 
 <div class="container">
     <div class="bs-example" data-example-id="simple-ul">
