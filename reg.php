@@ -1,5 +1,6 @@
 <?php
 include ('config.php');
+include 'PHPMailer-master/PHPMailerAutoload.php';
 ?>
 <?php
 if(isset($_POST["register"]))
@@ -18,12 +19,53 @@ if(isset($_POST["register"]))
         $numRows = count($namePwd);
         if($numRows==0)
         {
+
+            $mail = new PHPMailer;
+            $mail->isSMTP();                                      // Set mailer to use SMTP
+            $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
+            $mail->SMTPAuth = true;                               // Enable SMTP authentication
+            $mail->Username = 'idefiks1@gmail.com';                 // SMTP username
+            $mail->Password = 'nrkrM9DvX7737483I';                           // SMTP password
+            $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+            $mail->Port = 587;                                    // TCP port to connect to
+
+            $mail->setFrom('dev@vagrant.dev', 'Mailer');
+            $mail->addAddress($email, $username);
+
+            $mail->isHTML(true);                                  // Set email format to HTML
+
+            $mail->Subject = 'Signup | Verification';
+            $mail->Body    = '
+             
+            Thanks for signing up!
+            Your account has been created, you can login with the following credentials after you have activated your account by pressing the url below.
+            <br> 
+            <br>------------------------
+            <br>Username: '.$username.'
+            <br>Password: '.$_POST['InputPassword1'].'
+            <br>------------------------
+             
+            <br>Please click this link to activate your account:
+            http://vagrant.dev/verify.php?email='.$email.'&hash='.$hash.'
+             
+            ';
+            $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+
+            if(!$mail->send()) {
+                echo 'Message could not be sent.';
+                echo 'Mailer Error: ' . $mail->ErrorInfo;
+            } else {
+                echo 'Message has been sent';
+            }
+
+
             $stmt1 = $conn->prepare("INSERT INTO users (name, pwd, email, hash) VALUES (?,?,?,?)");
             $stmt1->bindParam(1, $username, PDO::PARAM_STR, 20);
             $stmt1->bindParam(2, $password, PDO::PARAM_STR, 100);
             $stmt1->bindParam(3, $email, PDO::PARAM_STR, 30);
             $stmt1->bindParam(4, $hash, PDO::PARAM_STR, 32);
             $stmt1->execute();
+            /*
             $to      = $email; // Send email to our user
             $subject = 'Signup | Verification'; 
             $cc = null;
@@ -47,8 +89,7 @@ if(isset($_POST["register"]))
             $headers = 'From:me@vagrant.dev' . "\r\n"; // Set from headers
             //$ok = mail($to, $subject, $message, $headers); // Send our email
             $ok = imap_mail($to, $subject, $message, $headers, $cc, $bcc, $return_path);
-            //var_dump($ok);
-            //die();
+            */
             header("Location: login.php");  
         }
         else 

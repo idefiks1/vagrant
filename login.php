@@ -13,7 +13,7 @@ if(isset($_POST["login"]))
     if(!empty($_POST['InputName']) && !empty($_POST['InputPassword'])) 
     {
         $username=$_POST['InputName'];
-        $password=md5('vagrant'+ $_POST['InputPassword']);
+        $password=md5($_POST['InputPassword']."vagrant");
         $conn = db_connect();
         $stmt = $conn->prepare("SELECT name, pwd  FROM users where name = ? AND pwd = ?");
         $stmt->bindParam(1, $username, PDO::PARAM_STR, 12);
