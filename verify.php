@@ -30,7 +30,12 @@ if (!empty($_GET['email']) && !empty($_GET['hash']))
 
 		<?php
 	}
+	else
+	{
+	echo "Maybe you verification is done. Please ";?> <a href = login.php >Login!</a> <?php echo "<br> Or input data are wrong!. Please, register!"; ?> <a href = reg.php >Register</a>
+	<?php	
+	}
 }
-
 ?>
+
 <?php include ('footer.php'); ?>
