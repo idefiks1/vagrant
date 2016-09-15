@@ -65,31 +65,6 @@ if(isset($_POST["register"]))
             $stmt1->bindParam(3, $email, PDO::PARAM_STR, 30);
             $stmt1->bindParam(4, $hash, PDO::PARAM_STR, 32);
             $stmt1->execute();
-            /*
-            $to      = $email; // Send email to our user
-            $subject = 'Signup | Verification'; 
-            $cc = null;
-            $bcc = null;
-            $return_path = "me@vagrant.dev";
-            $message = '
-             
-            Thanks for signing up!
-            Your account has been created, you can login with the following credentials after you have activated your account by pressing the url below.
-             
-            ------------------------
-            Username: '.$username.'
-            Password: '.$password.'
-            ------------------------
-             
-            Please click this link to activate your account:
-            http://www.vagrant.dev/verify.php?email='.$email.'&hash='.$hash.'
-             
-            '; // Our message above including the link
-                                 
-            $headers = 'From:me@vagrant.dev' . "\r\n"; // Set from headers
-            //$ok = mail($to, $subject, $message, $headers); // Send our email
-            $ok = imap_mail($to, $subject, $message, $headers, $cc, $bcc, $return_path);
-            */
             header("Location: login.php");  
         }
         else 
@@ -104,32 +79,44 @@ if(isset($_POST["register"]))
 <script>
     $(document).ready(function() {    
         $( "#InputLogin1" ).blur(function(e) {
-            e.preventDefault();
-            $.ajax({
-                type: 'POST',
-                url: 'check.php',
-                dataType: 'json',
-                data: {InputLogin1: $('#InputLogin1').val()},
 
-                success: function(data)
-                {
-                    
+                    e.preventDefault();
+                    $.ajax({
+                        type: 'POST',
+                        url: 'check.php',
+                        dataType: 'json',
+                        data: {InputLogin1: $('#InputLogin1').val()},
+                        //data: {Length:      $('#InputLogin1').val().length},
+                        success: function(data)
+                        {
+                            
 
-                    //console.log(data, data.success);
-                    if (data.success == true)
-                    {
-                        $("#InputLogin1").closest('.form-group').removeClass('has-error').addClass('has-success');
-                        $("#helpBlock1").html("Success!");
-                        $("#sub_reg").removeClass('disabled');
-                    }
-                    if (data.success == false)
-                    {
-                        $("#InputLogin1").closest('.form-group').removeClass('has-success').addClass('has-error');
-                        $("#helpBlock1").html("This login already use or empty!<br>Login must be longer than 2 characters");
-                        $("#sub_reg").addClass('disabled');
-                    }
+                            //console.log(data, data.success);
+                            if (data.success == true)
+                            {
+                                if ($('#InputLogin1').val().length<2)
+                                    {
+                                        alert("Login must be longer than 2 characters");
+                                        $("#helpBlock1").html("Login must be longer than 2 characters");
+                                        $("#InputLogin1").closest('.form-group').removeClass('has-success').addClass('has-error');
+                                        $("#sub_reg").addClass('disabled');
+                                    }
+                                else
+                                {
+                                    $("#InputLogin1").closest('.form-group').removeClass('has-error').addClass('has-success');
+                                    $("#helpBlock1").html("Success!");
+                                    $("#sub_reg").removeClass('disabled');
+                                }
+                               
+                            }
+                            if (data.success == false)
+                            {
+                                $("#InputLogin1").closest('.form-group').removeClass('has-success').addClass('has-error');
+                                $("#helpBlock1").html("This login already use or empty!");
+                                $("#sub_reg").addClass('disabled');
+                            }
                   
-                }
+                        }
               
 
             });
@@ -177,12 +164,16 @@ $( "#InputEmail" ).blur(function(c) {
                     //console.log(data, data.success1);
                     if (data.success2 == true)
                     {
+                         
+                        
                         $("#InputEmail").closest('.form-group').removeClass('has-error').addClass('has-success');
                         //$("#helpBlock3").html("Success!");
                         $("#sub_reg").removeClass('disabled');
                     }
                     if (data.success2 == false)
                     {
+                        alert("Only as example@email.com!");
+                                    
                         $("#InputEmail").closest('.form-group').removeClass('has-success').addClass('has-error');
                         $("#helpBlock3").html("Only as example@email.com!");
                         $("#sub_reg").addClass('disabled');
@@ -193,6 +184,25 @@ $( "#InputEmail" ).blur(function(c) {
 
             });
         });
+
+$( "#InputPassword1" ).blur(function(d) {
+          if ($('#InputPassword1').val().length<4)
+                                    {
+                                        alert("Login must be longer than 4 characters");
+                                        $("#helpBlock4").html("Password must be longer than 4 characters");
+                                        $("#InputPassword1").closest('.form-group').removeClass('has-success').addClass('has-error');
+                                        $("#sub_reg").addClass('disabled');
+                                    }
+            else
+            {
+                $("#helpBlock4").html("Success!");
+                $("#InputPassword1").closest('.form-group').removeClass('has-error').addClass('has-success');
+            }
+        });
+
+
+
+
 
 
 
@@ -209,15 +219,17 @@ $( "#InputEmail" ).blur(function(c) {
                 <p>Name</p>
             </label>
             <div class="form-group">
-                <p><input type="text" name="InputLogin1" class="form-control" id="InputLogin1" placeholder="Name" ></p>
+                <p><input type="text" name="InputLogin1" class="form-control" id="InputLogin1" placeholder="Name"></p>
                 <span id="helpBlock1" class="help-block"></span>
             </div>
 
             <label>
                 <p>Password</p>
             </label>
+            <div class="form-group">
             <p><input type="password" name="InputPassword1" class="form-control" id="InputPassword1" placeholder="Password"></p>
-
+                <span id="helpBlock4" class="help-block"></span>
+            </div>
             <label>
                 <p>Email</p>
             </label>

@@ -1,6 +1,4 @@
 <?php
-
-
 function db_connect()
 {
 	
@@ -18,31 +16,42 @@ function db_connect()
 
 	return $pdo;
 }
-
 $pdo = db_connect();
 $json = array();
-if (empty($_POST['InputLogin1']))
+//$str = $_GET['InputLogin1'];
+//var_dump($_POST);
+//die();
+if (!empty($_POST['InputLogin1']))
 {
-	$json['success'] = false;
+	
+	//if (strlen($_POST['InputLogin1'])<2)
+	//{
+
+		$stmt = $pdo->prepare("SELECT name FROM users WHERE name = ?");
+		$stmt->bindParam(1, $_POST['InputLogin1'], PDO::PARAM_STR, 20);
+		
+		$stmt->execute();
+		$numRows = $stmt->fetchColumn(); 
+		if (!empty($numRows))
+		{
+			$json['success'] = false;
+			//echo json_encode(array('success'=>false));
+
+			
+		}
+
+		else
+		{
+			$json['success'] = true;	
+			//echo json_encode(array('success'=>true));
+		}
+	//}
+	
 }
 else 
 {
-	$stmt = $pdo->prepare("SELECT name FROM users WHERE name = ?");
-	$stmt->bindParam(1, $_POST['InputLogin1'], PDO::PARAM_STR, 20);
-	$stmt->execute();
-	$numRows = $stmt->fetchColumn(); 
-	if (!empty($numRows))
-	{
-		$json['success'] = false;
-		//echo json_encode(array('success'=>false));
-
+	$json['success'] = false;
 		
-	}
-	else
-	{
-		$json['success'] = true;	
-		//echo json_encode(array('success'=>true));
-	}
 }
 
 if (empty($_POST['InputEmail']))
@@ -59,27 +68,16 @@ else
     else
     {
     	$json['success2'] = true;
-
-    }    
-	
-
-
-
-	$stmt1 = $pdo->prepare("SELECT email FROM users WHERE email = ?");
-	$stmt1->bindParam(1, $_POST['InputEmail'], PDO::PARAM_STR, 20);
-	$stmt1->execute();
-	$numRows1 = $stmt1->fetchColumn(); 
-	if (empty($numRows1))
-	{
-		$json['success1'] = true;
-		
-	}
-	else
-	{
-		$json['success1'] = false;
-		
-	}
-	
+    	$stmt1 = $pdo->prepare("SELECT email FROM users WHERE email = ?");
+		$stmt1->bindParam(1, $_POST['InputEmail'], PDO::PARAM_STR, 20);
+		$stmt1->execute();
+		$numRows1 = $stmt1->fetchColumn(); 
+		if (!empty($numRows1))
+		{
+			$json['success1'] = false;
+			
+		}
+    }   
 }
 echo json_encode($json);
 ?>
