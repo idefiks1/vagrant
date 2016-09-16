@@ -44,21 +44,20 @@ if(isset($_POST["register"]))
             <br>Username: '.$username.'
             <br>Password: '.$_POST['InputPassword1'].'
             <br>------------------------
-             
             <br>Please click this link to activate your account:
-            <a href=http://vagrant.dev/verify.php?email='.$email.'&hash='.$hash.'</a>'.'
-             
-            ';
-            $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+            <br><a href="http://vagrant.dev/verify.php?email='.$email.'&hash='.$hash.'">http://vagrant.dev/verify.php?email='
+            .$email.'&hash='.$hash.'</a>'.'';?>
+            <?php $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
-            if(!$mail->send()) {
+            if(!$mail->send()) 
+            {
                 echo 'Message could not be sent.';
                 echo 'Mailer Error: ' . $mail->ErrorInfo;
-            } else {
+            } else 
+            {
                 echo 'Message has been sent';
             }
-
-
+         
             $stmt1 = $conn->prepare("INSERT INTO users (name, pwd, email, hash) VALUES (?,?,?,?)");
             $stmt1->bindParam(1, $username, PDO::PARAM_STR, 20);
             $stmt1->bindParam(2, $password, PDO::PARAM_STR, 100);
@@ -97,26 +96,29 @@ $(document).ready(function()
             {
                 if (data.success == true)
                 {
-                    //if ($('#InputLogin1').val().length<2)
+                    $("#sub_reg").prop("disabled", "false"); 
                     if ($('#InputLogin1').val().length<2)
                     {
+                        $("#sub_reg").prop("disabled", "true");
                         //alert("Login must be longer than 2 characters!");
-                        $("#helpBlock1").html("Login must be longer than 2 characters.");
+                        //$("#helpBlock1").html("Login must be longer than 2 characters.");
                         $("#InputLogin1").closest('.form-group').removeClass('has-success').addClass('has-error');
-                        $("#sub_reg").addClass('disabled');
+                        
                     }
                     else
                     {
+                        $("#sub_reg").prop("disabled", "false");  
                         $("#InputLogin1").closest('.form-group').removeClass('has-error').addClass('has-success');
-                        $("#helpBlock1").html("Success!");
-                        $("#sub_reg").removeClass('disabled');  
+                        //$("#helpBlock1").html("Success!");
+                        
                     } 
                 }
                 if (data.success == false)
                 {
+                    $("#sub_reg").prop("disabled", "true");
                     $("#InputLogin1").closest('.form-group').removeClass('has-success').addClass('has-error');
-                    $("#helpBlock1").html("This login already use or empty!");
-                    $("#sub_reg").addClass('disabled');
+                    //$("#helpBlock1").html("This login already use or empty!");
+                    
                 }
             }
         });
@@ -132,19 +134,19 @@ $(document).ready(function()
             data: {InputEmail: $('#InputEmail').val()},
             success: function(data)
             {
+                 if (data.success1 == false)
+                {
+                    $("#sub_reg").prop("disabled", "true");
+                    $("#InputEmail").closest('.form-group').removeClass('has-success').addClass('has-error');
+                    //$("#helpBlock2").html("This email already use or empty!");
+                    
+                }
                 if (data.success1 == true)
                 {
+                    $("#sub_reg").prop("disabled", "false");
                     $("#InputEmail").closest('.form-group').removeClass('has-error').addClass('has-success');
-                    //$("#helpBlock2").html("Success!");
-                    $("#sub_reg").removeClass('disabled');
+                    //$("#helpBlock2").html("Success!");   
                 }
-                if (data.success1 == false)
-                {
-                    $("#InputEmail").closest('.form-group').removeClass('has-success').addClass('has-error');
-                    $("#helpBlock2").html("This email already use or empty!");
-                    $("#sub_reg").addClass('disabled');
-                }
-                    
             }
         });
     }); 
@@ -162,16 +164,19 @@ $(document).ready(function()
                 //console.log(data, data.success1);
                 if (data.success2 == true)
                 {
+                    
                     $("#InputEmail").closest('.form-group').removeClass('has-error').addClass('has-success');
-                    //$("#helpBlock3").html("Success!");
-                    $("#sub_reg").removeClass('disabled');
+                    $("#helpBlock3").html("Success!");
+                    $("#sub_reg").removeAttr("disabled");
+                    
                 }
                 if (data.success2 == false)
                 {
-                    alert("Only as example@email.com!");
+                    $("#sub_reg").prop("disabled", "true");
+                    //alert("Only as example@email.com!");
                     $("#InputEmail").closest('.form-group').removeClass('has-success').addClass('has-error');
-                    $("#helpBlock3").html("Only as example@email.com!");
-                    $("#sub_reg").addClass('disabled');
+                    //$("#helpBlock3").html("Only as example@email.com!");
+                    
                 }
             }
         });
@@ -180,10 +185,10 @@ $(document).ready(function()
     {
         if ($('#InputPassword1').val().length<4)
         {
+            $("#sub_reg").prop("disabled", "true");
             alert("Login must be longer than 4 characters");
             $("#helpBlock4").html("Password must be longer than 4 characters");
-            $("#InputPassword1").closest('.form-group').removeClass('has-success').addClass('has-error');
-            $("#sub_reg").addClass('disabled');
+            $("#InputPassword1").closest('.form-group').removeClass('has-success').addClass('has-error');   
         }
         else
         {
