@@ -13,7 +13,6 @@ if(!isset($_SESSION["session_username"]))
 	$CommentArray = $stmt->fetch(PDO::FETCH_ASSOC);
     $Comment = $CommentArray['comment'];
     $idComment = $CommentArray['id'];
-    
 	if(!empty($_POST['text_comment']))
 	{
 		if (isset($_POST["Save"])) 
@@ -28,7 +27,6 @@ if(!isset($_SESSION["session_username"]))
 			header('Location: '.$url);
 		}   
 	}
-
 ?>
 <div class="container">
 	<div class="bs-example" data-example-id="simple-ul">

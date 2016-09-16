@@ -4,9 +4,6 @@ include ('config.php');
 ini_set('error_reporting', E_ALL);
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1); 
-
-  
-
 if(!empty($_POST['text_comment']))
 {
     $pdo = db_connect();
@@ -25,7 +22,6 @@ if(!empty($_POST['text_comment']))
 	$url="index.php";
 	header('Location: '.$url);
 }
-
 function add_data($name, $comment, $idUser, $date)
 {
 	$pdo = db_connect();
@@ -37,8 +33,6 @@ function add_data($name, $comment, $idUser, $date)
     
     $result = $stmt->execute();
 }
-
-
 ?>
 
 <div class="container">
@@ -52,7 +46,4 @@ function add_data($name, $comment, $idUser, $date)
         <br>
     </div>
 </div>
-  
-
 <?php include ('footer.php'); ?>
-

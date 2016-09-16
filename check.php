@@ -1,7 +1,6 @@
 <?php
 function db_connect()
 {
-	
 	$servername = 'localhost';
 	$dbname = 'vagrant';
 	$username = 'root';
@@ -13,20 +12,12 @@ function db_connect()
 	catch (PDOException $e) {
     echo 'No connection: ' . $e->getMessage();
 	}
-
 	return $pdo;
 }
 $pdo = db_connect();
 $json = array();
-//$str = $_GET['InputLogin1'];
-//var_dump($_POST);
-//die();
 if (!empty($_POST['InputLogin1']))
 {
-	
-	//if (strlen($_POST['InputLogin1'])<2)
-	//{
-
 		$stmt = $pdo->prepare("SELECT name FROM users WHERE name = ?");
 		$stmt->bindParam(1, $_POST['InputLogin1'], PDO::PARAM_STR, 20);
 		
@@ -36,24 +27,18 @@ if (!empty($_POST['InputLogin1']))
 		{
 			$json['success'] = false;
 			//echo json_encode(array('success'=>false));
-
-			
 		}
-
 		else
 		{
 			$json['success'] = true;	
 			//echo json_encode(array('success'=>true));
 		}
-	//}
-	
 }
 else 
 {
 	$json['success'] = false;
 		
 }
-
 if (empty($_POST['InputEmail']))
 {
 	$json['success1'] = false;
@@ -74,8 +59,7 @@ else
 		$numRows1 = $stmt1->fetchColumn(); 
 		if (!empty($numRows1))
 		{
-			$json['success1'] = false;
-			
+			$json['success1'] = false;	
 		}
     }   
 }

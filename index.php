@@ -16,13 +16,59 @@ include ('config.php');
                     <div class="bs-example" data-example-id="simple-ul">
                         <ul class="list-unstyled">
                         <li><b><?= $value['name']."\n"; ?></b></li>
-                        <li><h5><?php echo $value['comment']. "\n"; ?></h5></li>
-                        <li><small><?php echo $value['date']."\n"; ?></small></li>
+                        <?php
+                        if(strlen($value['comment'])>50)
+                        {
+                            ?>
+                            <li><h5><?= substr($value['comment'],0,50); ?></h5>
+                            <button type="button" class="btn btn-default btn-xs" id= "full1">...</button>
+                            <script>
+                           /*$( "#full1" ).click(function(c) {
+                            c.preventDefault();
+                            $.ajax({
+                                type: 'POST',
+                                url: 'full.php',
+                                dataType: 'json',
+                                data: {Input: $('#full').val()},
+                                success: function(data)
+                                {
+
+                                    //console.log(data, data.success1);
+                                    if (data.success == true)
+                                    {
+                                        $('#full').val(data)
+                                        
+                                    }
+                                    if (data.success == false)
+                                    {
+                                       $('#full').val("")
+                                    }
+                                    
+                                }
+                              
+
+                            });
+                        });*/
+                           </script>
+                            </li>
+                            <?php 
+                        }
+                        ?>
+                          <?php
+                       if(strlen($value['comment'])<50)
+                        {
+                            ?>
+                            <li><h5><?= $value['comment']; ?></h5>
+                            </li>
+                            <?php 
+                        }
+                        ?>
+                        <li><small><?= $value['date']."\n"; ?></small></li>
                         <?php
                         if(isset($_SESSION["session_username"]) and $_SESSION["session_username"]==$value['name'])
                         {
                             ?>
-                            <a href = "edit.php?id=<?php echo $value['id']; ?>">Edit</a>
+                            <a href = "edit.php?id=<?= $value['id']; ?>">Edit</a>
                             <?php 
                         }
                         ?>
@@ -46,8 +92,6 @@ include ('config.php');
         </div>   
     </div>
 </div>
-
-
 <?php include ('footer.php'); ?>
 
 
