@@ -20,41 +20,12 @@ include ('config.php');
                         if(strlen($value['comment'])>50)
                         {
                             ?>
-                            <li><h5><?= substr($value['comment'],0,50); ?></h5>
-                            <button type="button" class="btn btn-default btn-xs" id= "full1">...</button>
-                            <script>
-                           /*$( "#full1" ).click(function(c) {
-                            c.preventDefault();
-                            $.ajax({
-                                type: 'POST',
-                                url: 'full.php',
-                                dataType: 'json',
-                                data: {Input: $('#full').val()},
-                                success: function(data)
-                                {
-
-                                    //console.log(data, data.success1);
-                                    if (data.success == true)
-                                    {
-                                        $('#full').val(data)
-                                        
-                                    }
-                                    if (data.success == false)
-                                    {
-                                       $('#full').val("")
-                                    }
-                                    
-                                }
-                              
-
-                            });
-                        });*/
-                           </script>
-                            </li>
+                            <p id= "sub<?= $value['id'];?>"><?=substr($value['comment'],0,50);?></p><button class="full">...</button>                      
+                            <p style="word-wrap: break-word;" hidden="display:none;"><?= $value['comment'];?></p>   
                             <?php 
                         }
-                        ?>
-                          <?php
+                        ?>   
+                        <?php
                        if(strlen($value['comment'])<50)
                         {
                             ?>
@@ -77,6 +48,7 @@ include ('config.php');
                     <?php
                     }
                     ?>
+                      
         </div>
         <div class="col-md-3 col-md-offset-3">
          <?php
@@ -92,6 +64,13 @@ include ('config.php');
         </div>   
     </div>
 </div>
+<script>
+    $(".full").click(function()
+    {
+        $(this).next().toggle();
+        
+    });
+</script>   
 <?php include ('footer.php'); ?>
 
 

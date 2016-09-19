@@ -21,7 +21,7 @@ function db_connect()
 function get_data()
 {
 	$pdo = db_connect();
-	$stmt = $pdo->prepare("SELECT * FROM comments ");//join users
+	$stmt = $pdo->prepare("select users.name, id, comment, date from comments INNER JOIN users on comments.id_user=users.id_user");//join users
     $stmt->execute();
     $rowsArray = $stmt->fetchAll();
 	return $rowsArray;

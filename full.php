@@ -1,4 +1,5 @@
 <?php
+/*
 function db_connect()
 {
 	
@@ -32,4 +33,6 @@ $a = "admin";
 			//echo json_encode(array('success'=>false));
 		}
 		echo json_encode($json);
+*/
+		
 ?>

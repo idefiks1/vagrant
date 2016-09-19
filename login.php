@@ -12,7 +12,7 @@ if(isset($_POST["login"]))
         $password=md5($_POST['InputPassword']."vagrant");
         $conn = db_connect();
         $active = 1;
-        $stmt = $conn->prepare("SELECT name, pwd  FROM users where name = ? AND pwd = ? AND active = ?");
+        $stmt = $conn->prepare("SELECT name, pwd, active  FROM users where name = ? AND pwd = ? AND active = ?");
         $stmt->bindParam(1, $username, PDO::PARAM_STR);
         $stmt->bindParam(2, $password, PDO::PARAM_STR);
         $stmt->bindParam(3, $active, PDO::PARAM_INT, 1);
