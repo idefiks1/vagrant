@@ -180,12 +180,13 @@ $(document).ready(function()
                 {
                     
                     $("#InputEmail").closest('.form-group').removeClass('has-error').addClass('has-success');
-                    $("#helpBlock3").html("Success!");
+                    //$("#helpBlock3").html("Success!");
                     $("#sub_reg").removeAttr("disabled");
                     
                 }
                 if (data.success2 == false)
                 {
+                    //$("#helpBlock3").html("Only as example@email.com!");
                     $("#sub_reg").prop("disabled", "true");
                     //alert("Only as example@email.com!");
                     $("#InputEmail").closest('.form-group').removeClass('has-success').addClass('has-error');
