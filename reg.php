@@ -78,11 +78,19 @@ if(isset($_POST["register"]))
 <script>
 $(document).ready(function() 
 {
-    function isValidLogin(passw) 
+    function isValidPassword(passw)
     {
         var pattern = new RegExp(/[A-Za-z0-9]{6,}/);
         return pattern.test(passw);
-    } 
+    }
+    function isValidLogin(login) 
+    {
+        var pattern = new RegExp(/[A-Za-z0-9]{2,}/);
+        return pattern.test(login);
+    }
+
+       
+    
     $( "#InputLogin1" ).blur(function(e) 
     {
         e.preventDefault();
@@ -97,32 +105,37 @@ $(document).ready(function()
                 if (data.success == true)
                 {
                     $("#sub_reg").prop("disabled", "false"); 
-                    if ($('#InputLogin1').val().length<2)
-                    {
-                        $("#sub_reg").prop("disabled", "true");
-                        //alert("Login must be longer than 2 characters!");
-                        //$("#helpBlock1").html("Login must be longer than 2 characters.");
-                        $("#InputLogin1").closest('.form-group').removeClass('has-success').addClass('has-error');
-                        
-                    }
-                    else
-                    {
-                        $("#sub_reg").prop("disabled", "false");  
-                        $("#InputLogin1").closest('.form-group').removeClass('has-error').addClass('has-success');
-                        //$("#helpBlock1").html("Success!");
-                        
+                    var Ulogin = $('#InputLogin1').val();
+                    if(Ulogin != 0)
+                    {   
+                        if (isValidLogin(Ulogin))
+                        {
+                            $("#InputLogin1").closest('.form-group').removeClass('has-error').addClass('has-success');
+                            $("#helpBlock1").html("Success!");
+                        }
+                        else
+                        {
+                            $("#InputLogin1").closest('.form-group').removeClass('has-success').addClass('has-error');
+                            $("#helpBlock1").html("Login is invalid!");
+                        } 
                     } 
+                    else 
+                    {      
+                        $("#InputLogin1").closest('.form-group').removeClass('has-success').addClass('has-error');
+                        $("#helpBlock1").html("Login empty!");
+                    }
                 }
                 if (data.success == false)
                 {
                     $("#sub_reg").prop("disabled", "true");
                     $("#InputLogin1").closest('.form-group').removeClass('has-success').addClass('has-error');
-                    //$("#helpBlock1").html("This login already use or empty!");
+                    $("#helpBlock1").html("This login already use or empty!");
                     
                 }
             }
         });
     });
+    ///Check email in db
     $( "#InputEmail" ).blur(function(e) 
     {
         e.preventDefault();
@@ -150,6 +163,8 @@ $(document).ready(function()
             }
         });
     }); 
+    ///Check email in db
+    ///Check email for pattern
     $( "#InputEmail" ).blur(function(c) 
     {
         c.preventDefault();
@@ -161,7 +176,6 @@ $(document).ready(function()
             data: {InputEmail: $('#InputEmail').val()},
             success: function(data)
             {
-                //console.log(data, data.success1);
                 if (data.success2 == true)
                 {
                     
@@ -181,19 +195,27 @@ $(document).ready(function()
             }
         });
     });
+    ///Check email for pattern
     $( "#InputPassword1" ).blur(function(d) 
     {
-        if ($('#InputPassword1').val().length<4)
-        {
-            $("#sub_reg").prop("disabled", "true");
-            alert("Login must be longer than 4 characters");
-            $("#helpBlock4").html("Password must be longer than 4 characters");
-            $("#InputPassword1").closest('.form-group').removeClass('has-success').addClass('has-error');   
-        }
-        else
-        {
-            $("#helpBlock4").html("Success!");
-            $("#InputPassword1").closest('.form-group').removeClass('has-error').addClass('has-success');
+        var Upass = $('#InputPassword1').val();
+        if(Upass != 0)
+        {   
+            if (isValidPassword(Upass))
+            {
+                $("#InputPassword1").closest('.form-group').removeClass('has-error').addClass('has-success');
+                $("#helpBlock4").html("Success!");
+            }
+            else 
+            {
+                $("#InputPassword1").closest('.form-group').removeClass('has-success').addClass('has-error');
+                $("#helpBlock4").html("Password is invalid! Password contains invalid characters. Use letters and numbers.");
+            } 
+        } 
+        else 
+        {      
+            $("#InputPassword1").closest('.form-group').removeClass('has-success').addClass('has-error');
+            $("#helpBlock4").html("Password empty");
         }
     });
 });
