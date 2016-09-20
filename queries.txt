@@ -1,7 +1,6 @@
 CREATE TABLE `comments` (
   `id` int(4) NOT NULL AUTO_INCREMENT,
   `id_user` int(4) NOT NULL,
-  `name` varchar(20) DEFAULT NULL,
   `comment` varchar(100) DEFAULT NULL,
   `date` date DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -20,5 +19,6 @@ CREATE TABLE `users` (
 
 ALTER TABLE `users` ADD `hash` VARCHAR( 32 ) NOT NULL after `pwd`;
 ALTER TABLE `users` ADD `active` INT( 1 ) NOT NULL DEFAULT '0' after `hash`;
+
 
 
