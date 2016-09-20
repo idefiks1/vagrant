@@ -22,9 +22,11 @@ include ('functions.php');
                             if(strlen($value['comment'])>50)
                             {
                                 ?>
-                                <p><?=strCut($value['comment'],30,40);?></p>
-                                    <button class="btn" type="submit">...</button>                    
-                                <p id="hidden"><?= $value['comment'];?></p>   
+                                <div>
+                                    <p><?=strCut($value['comment'],30,40);?></p>
+                                    <a class="btn">View full...</a>
+                                    <p id="hidden"><?= $value['comment'];?></p>
+                                </div>  
                                 <?php 
                             }
                             ?>   

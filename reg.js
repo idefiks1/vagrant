@@ -147,7 +147,8 @@ $(document).ready(function()
         {
             $(this).next().slideDown("slow").show();
             $(this).prev().toggle();
-        } else
+        } 
+        else
         {
             $(this).next().slideUp("slow").hide("slow");
             $(this).prev().toggle();

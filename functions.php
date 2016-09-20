@@ -10,7 +10,7 @@ function strCut($string,$from,$to)
         $strnew = $strnew." ".$arrStr[$i]." ";
 		if (($len>=$from) && ($len<=$to))
         {
-        	$strnew = $strnew."...";
+        	$strnew = $strnew;
             echo $strnew;
             break;
         } 
