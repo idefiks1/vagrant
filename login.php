@@ -35,12 +35,10 @@ if(isset($_POST["login"]))
                 $_SESSION['session_username']=$username;  
                 header("Location: index.php");
             }
-
-
         }
         if ($activeStatus == 0)
             {
-                ?><div style= "text-align:center;"><label><?="Please activate your accout! Check email!";?></label></div>
+                ?><div id="message"><label><?="Please activate your accout! Check e-mail!";?></label></div>
             <?php } 
         else 
         {
@@ -52,7 +50,7 @@ if(isset($_POST["login"]))
 <div class="container">
     <div class="bs-example" data-example-id="simple-ul">
         <form action="login.php" method="post">
-            <div style= "text-align:center;">
+            <div id="message">
                 <label>Please, login</label></p>
             </div>
                 <label>

@@ -1,42 +1,25 @@
 <?php
-function db_connect()
-{
-	$servername = 'localhost';
-	$dbname = 'vagrant';
-	$username = 'root';
-	$password = 'root';
-
-	try {
-    $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-	} 
-	catch (PDOException $e) {
-    echo 'No connection: ' . $e->getMessage();
-	}
-	return $pdo;
-}
+include ('dbConnect.php');
 $pdo = db_connect();
 $json = array();
 if (!empty($_POST['InputLogin1']))
 {
-		$stmt = $pdo->prepare("SELECT name FROM users WHERE name = ?");
-		$stmt->bindParam(1, $_POST['InputLogin1'], PDO::PARAM_STR);		
-		$stmt->execute();
-		$numRows = $stmt->fetchColumn();
-		if (!empty($numRows))
-		{
-			$json['success'] = false;
-			//echo json_encode(array('success'=>false));
-		}
-		else
-		{
-			$json['success'] = true;	
-			//echo json_encode(array('success'=>true));
-		}
+	$stmt = $pdo->prepare("SELECT name FROM users WHERE name = ?");
+	$stmt->bindParam(1, $_POST['InputLogin1'], PDO::PARAM_STR);		
+	$stmt->execute();
+	$numRows = $stmt->fetchColumn();
+	if (!empty($numRows))
+	{
+		$json['success'] = false;
+	}
+	else
+	{
+		$json['success'] = true;	
+	}
 }
 else 
 {
-	$json['success'] = false;
-		
+	$json['success'] = false;	
 }
 if (empty($_POST['InputEmail']))
 {
