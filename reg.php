@@ -19,6 +19,7 @@ if(isset($_POST["register"]))
         $numRows = count($namePwd);
         if($numRows==0)
         {
+            $link = $_SERVER['SERVER_NAME'];
             $mail = new PHPMailer;
             $mail->isSMTP();                                      // Set mailer to use SMTP
             $mail->Host = 'smtp.gmail.com';  // Specify main and backup SMTP servers
@@ -41,7 +42,7 @@ if(isset($_POST["register"]))
             <br>Password: '.$_POST['InputPassword1'].'
             <br>------------------------
             <br>Please click this link to activate your account:
-            <br><a href="http://vagrant.dev/verify.php?email='.$email.'&hash='.$hash.'">http://vagrant.dev/verify.php?email='
+            <br><a href="http://'.$link.'/verify.php?email='.$email.'&hash='.$hash.'">http://'.$link.'/verify.php?email='
             .$email.'&hash='.$hash.'</a>'.'';?>
             <?php $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
             if(!$mail->send()) 

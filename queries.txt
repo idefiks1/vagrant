@@ -1,7 +1,7 @@
 CREATE TABLE `comments` (
   `id` int(4) NOT NULL AUTO_INCREMENT,
   `id_user` int(4) NOT NULL,
-  `comment` varchar(100) DEFAULT NULL,
+  `comment` varchar(500) DEFAULT NULL,
   `date` date DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
