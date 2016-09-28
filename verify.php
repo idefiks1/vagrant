@@ -1,6 +1,6 @@
 <?php
 include ('config.php');
-if( empty($_GET['email']) or empty($_GET['hash']) )
+if(empty($_GET['email']) or empty($_GET['hash']) )
 {
 	
 	echo "Error! Maybe you verification is done. Please ";?>
@@ -25,6 +25,7 @@ else
 	    $Email = $emailArray['email'];
 		$Hash = $emailArray['hash'];
 		$Active = $emailArray['active'];
+
 		if ( (!empty($Email)) && (!empty($Hash)) &&  ($Active == '0'))
 		{
 			$stmt = $pdo->prepare("UPDATE users SET active = '1' WHERE email = ? AND hash = ?");
@@ -36,7 +37,7 @@ else
 		}
 		else
 		{
-			echo "Link is not active! You activate is done. PLease "; ?> <a href = login.php >Login</a>
+			echo "Link is not active!PLease "; ?> <a href = reg.php >Register</a>
 			<?php
 		}
 	}	

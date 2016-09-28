@@ -141,7 +141,7 @@ $(document).ready(function()
         }
     });
     ///Check password for pattern
-     $(".btn").click(function()
+    $(".btn").click(function()
     {
         if ($(this).next().is(":hidden"))
         {

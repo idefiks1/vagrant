@@ -30,7 +30,7 @@ if(!isset($_SESSION["session_username"]))
 ?>
 <div class="container">
 	<div class="bs-example" data-example-id="simple-ul">
-		<form name="comment" action="edit.php?id=<?php echo $idComment; ?>" method="post">
+		<form name="comment"  method="post">
   			<br>
   			<p>
                 <label for="comment">Edit and click Save.</label>

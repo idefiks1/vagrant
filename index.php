@@ -44,14 +44,14 @@ include ('functions.php');
                                 <small><?= $value['date']."\n"; ?></small>
                             </li>
                             <?php
-                            if(isset($_SESSION["session_username"]) and $_SESSION["session_username"]==$value['name'])
+                               if(isset($_SESSION["session_username"]) and $_SESSION["session_username"]==$value['name'])
                             {
                                 ?>
                                 <a href = "edit.php?id=<?= $value['id']; ?>">Edit</a>
                                 <?php 
-                            }
-                            ?>
-                        </ul>
+                            }?>
+                             
+                            </ul>
                     </div>
                     <?php
                     }
